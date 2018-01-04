@@ -25,7 +25,7 @@ public class ContainerImpl implements Container {
 	}
 
 	@Override
-	public <I, T extends I> T addNewComponent(Class<I> itf, Class<T> cls) {
+	public <I, T extends I> T addComponent(Class<I> itf, Class<T> cls) {
 		T rt = newInstance(cls);
 		this.addComponent(itf, rt);
 		return rt;
