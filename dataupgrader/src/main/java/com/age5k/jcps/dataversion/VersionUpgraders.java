@@ -53,10 +53,11 @@ public abstract class VersionUpgraders<T> {
 
 	private DataVersion tryUpgrade(T ctx) {
 		DataVersion rt = null;
-		for (VersionUpgrader up : this.upgraderList) {
+		for (VersionUpgrader<T> up : this.upgraderList) {
 			if (this.currentVersion == up.getSourceVersion()) {
 				up.upgrade(ctx);//
 				rt = up.getTargetVersion();
+				this.writeDataVersion(ctx, rt);
 			}
 		}
 		if (rt != null) {
@@ -64,6 +65,7 @@ public abstract class VersionUpgraders<T> {
 		}
 		return rt;
 	}
+
 	protected abstract void writeDataVersion(T ctx, DataVersion dver);
 
 	protected abstract DataVersion resolveDataVersion(T ctx);
