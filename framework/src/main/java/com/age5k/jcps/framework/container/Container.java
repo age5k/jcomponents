@@ -1,5 +1,7 @@
 package com.age5k.jcps.framework.container;
 
+import com.age5k.jcps.framework.provider.Provider;
+
 /**
  * 
  * @author Wu
@@ -47,5 +49,15 @@ public interface Container {
 	 * @return
 	 */
 	public <T> T findComponent(Class<T> cls, boolean force);
+
+	/**
+	 * Instead of find the component now, this method will return a provider that
+	 * will call findCommponent later: when the method Provider.get() is called.
+	 * 
+	 * @param cls
+	 * @param force
+	 * @return
+	 */
+	public <T> Provider<T> findComponentLater(Class<T> cls, boolean force);
 
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.age5k.jcps.JcpsException;
 import com.age5k.jcps.framework.container.Container;
 import com.age5k.jcps.framework.container.Container.Aware;
+import com.age5k.jcps.framework.provider.Provider;
 
 public class ContainerImpl implements Container {
 	private static final Logger LOG = LoggerFactory.getLogger(ContainerImpl.class);
@@ -62,6 +63,26 @@ public class ContainerImpl implements Container {
 			throw new JcpsException("duplicated component:" + old);
 		}
 		return this;
+	}
+
+	@Override
+	public <T> Provider<T> findComponentLater(Class<T> cls, boolean force) {
+
+		return new Provider<T>() {
+			private T target;
+			private boolean got;
+
+			@Override
+			public T get() {
+				if (!this.got) {
+					this.target = ContainerImpl.this.findComponent(cls, false);
+				}
+				if (force && this.target == null) {
+					throw new JcpsException("no component found for cls:" + cls);
+				}
+				return this.target;
+			}
+		};
 	}
 
 }
