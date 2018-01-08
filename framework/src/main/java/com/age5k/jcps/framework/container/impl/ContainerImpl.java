@@ -24,7 +24,10 @@ public class ContainerImpl implements Container {
 	public void destroy() {
 
 	}
-
+	@Override
+	public <T> T addComponent(Class<T> cls) {
+		return this.addComponent(cls, cls);
+	}
 	@Override
 	public <I, T extends I> T addComponent(Class<I> itf, Class<T> cls) {
 		T rt = newInstance(cls);
