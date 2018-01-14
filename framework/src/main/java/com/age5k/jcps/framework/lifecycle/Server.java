@@ -1,4 +1,4 @@
-package com.age5k.jcps.framework.server;
+package com.age5k.jcps.framework.lifecycle;
 
 public interface Server {
 
